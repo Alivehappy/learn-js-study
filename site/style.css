@@ -1,0 +1,41 @@
+.message-window{
+    width: 148px;
+    height: 54px;
+    background: rgb(0, 0, 0, .2);
+    position:  fixed;
+    right: 40px;
+    bottom: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: contain;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: all ease 1s;
+}
+.message-window > div{
+    width: 48px;
+    height: 48px;
+    background-size: contain;
+    transition: all ease 1s;
+    
+}
+.message-window > div:hover{
+    transform: rotate(360deg);
+}
+.message-window > div > a{
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+.message-window .telegram {
+background-image: url('./images1.jpg')
+}
+.message-window .wa {
+    background-image: url('./images1\ —\ копия.jpg')
+    }
+    .message-window .mail {
+        background-image: url('./images1\ —\ копия\ \(2\).jpg')}
+        .d-w-none{
+            bottom: -150px;
+        }
