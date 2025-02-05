@@ -1,4 +1,4 @@
-//я прошла тнмы в js : if || && ?? и присваивания switch for !== дай задачи  4
+//я прошла темы в js : if || && ?? и присваивания switch for !== дай задачи  4
 function showMessage(){
     alert("hey");
 }showMessage();
