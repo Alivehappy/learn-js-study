@@ -79,7 +79,7 @@ alert(Symbol.keyFor(sym)) // name
 alert(Symbol.keyFor(sym2)) // id
 //Внутри метода Symbol.keyFor используется глобальный реестр символов для нахождения имени символа. Так что этот метод не будет работать для неглобальных символов. Если символ неглобальный, метод не сможет его найти и вернёт undefined
 //Впрочем, для любых символов доступно свойство description
-
+L
 let globalSymbol = Symbol.for('name')
 let localSymbol = Symbol('name') /// name, глобальный символ
 alert(Symbol.keyFor(globalSymbol)) //name, глобальный симво
