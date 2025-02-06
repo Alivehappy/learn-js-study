@@ -359,3 +359,49 @@ function Book(){
 }
 let obj = new Book();
 obj.getInfo()
+
+
+function Yes(){
+this.num = 5;
+this.up = function (){
+this.num++;
+return this.num;
+};
+this.down = function(){
+  this.num--;
+  return this.num
+}
+}
+let yes1 = new Yes();
+console.log(yes1.up()); 
+console.log(yes1.up()); 
+console.log(yes1.down());
+
+
+function info (name, age){
+this.name = name;
+this.age = age;
+console.log(`i am ${this.name}, ${this.age} years old`);
+}
+info('a1', 14) ///or
+
+
+let Person (name,  age) {
+  this.name ='1',
+  this.age = 1,
+  this.introduce(){
+    console.log(`i am ${this.name}, ${this.age} years old`); 
+  }
+}
+this.introduce();
+this.celebrateBirthday = function(){
+  console.log(`Теперь мне ${++this.age} лет!`); 
+
+};
+
+
+let user = new Person( 'B', 12);
+user.celebrateBirthday()
+user.introduce();
+user.celebrateBirthday();      
+user.introduce();
