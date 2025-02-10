@@ -145,3 +145,33 @@ let user = {
     }
 };
 user.sayHi()//Ilya
+
+
+const obj = {
+    prop: 123,
+    method() {
+        console.log(this.prop);
+    }
+}; 
+obj.method() // 123
+
+//const copy = Object.assign(copy, obj);// copy тут не объект нельхя так написаьт
+const copy = Object.assign({}, obj)
+console.log(copy);
+
+//{prop: 123, method: ƒ}
+const a = Object.assign(obj , {prop: 1});
+console.log(obj); 
+console.log(copy); 
+
+//Объект obj уже был объявлен ранее, и у него есть свойство prop со значением 123 и метод method
+/*Object.assign(obj, {prop: 1}) изменяет свойства объекта obj. Метод Object.assign копирует значения всех перечисляемых собственных свойств из источников (в данном случае из объекта { prop: 1 }) в целевой объект (в данном случае obj).
+
+Объект obj будет изменен. Значение свойства prop у obj будет перезаписано значением 1 из переданного объекта.
+
+Вывод в консоль: Когда вы вызываете console.log(obj)*/
+
+123 -  вызов метода
+VM135:11 {prop: 123, method: ƒ}method: ƒ method()prop: 123[[Prototype]]: Object //вызов copy
+VM135:15 {prop: 1, method: ƒ} //console.log(obj); вызоб с измененнным свойством
+VM135:16 {prop: 123, method: ƒ} //console.log(copy);

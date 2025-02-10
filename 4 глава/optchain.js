@@ -65,17 +65,74 @@ let user = null;
 user?.name = 'John'// Ошибка, не работает
 // то же самое что написать undefined = "John"
 
-obj?.prop – возвращает obj.prop если obj существует, в противном случае undefined.
+/*obj?.prop – возвращает obj.prop если obj существует, в противном случае undefined.
 obj?.[prop] – возвращает obj[prop] если obj существует, в противном случае undefined.
-obj.method?.() – вызывает obj.method(), если obj.method существует, в противном случае возвращает undefined.
+obj.method?.() – вызывает obj.method(), если obj.method существует, в противном случае возвращает undefined.*/
+ let user = {
+  profile:{
+    name: 'Alice'
+  }
+ };
+ console.log(user.profile.age); //undefined (возраст не существует)
+console.log(user.settings.theme); // Ошибка: Cannot read property 'theme' of undefined
+
+console.log(user.settings?.theme);// undefined (без ошибки)
+//Здесь ?. проверяет, существует ли settings. Если settings равно null или undefined, выполнение останавливается, и возвращается undefined.
+
+const user = {
+  sayHello(){
+    return 'Hello';
+  }
+};
+console.log(user.sayGoodbye?.()); //undefined (метод не существует)
+
+
+const user = {};
+console.log(user.profile?.name ?? "Guest");// "Guest" (если name undefined или null)
+
+const company = {
+  name: "Tech Corp",
+department :{
+  development: {
+    teamLead : 'Alice'
+  }
+}
+};
+if(company.department.development?.teamLead){
+  console.log(company.department.development.teamLead);
+}else{
+  console.log("No team lead");
+}
+
+const user = {
+  name: 'John',
+  adress: null,
+ showAdress(){
+  return 'next street'
+ }
+};
+console.log(user.adress?.city ? user.adress.city : "Unknown city");
+console.log(user.showAdress?.());
+
+const user =  {
+name: 'John',
+details : {
+  age: 30
+}
+};
+console.log(user.details?.['age']); //30
+console.log(user.details?.['street']);
 
 
 
 
 
+
+
+/* примеры из рнд
 //null & undefined
 console.log("1. undefined + undefined >>", undefined + undefined); // nan
-console.log("2. null - 100 >>", null - 100); // -99
+console.log("2. null - 100 >>", null - 100); // -100
 console.log("3. null + undefined >>", null + undefined); //nan
 console.log("4. undefined > 0 >>", undefined > 0); //false
 console.log("5. null === 0 >>", null === 0); // false
@@ -83,8 +140,11 @@ console.log("6. undefined > null >>", undefined > null); // false
 const doNothing = () => {};
 console.log("7. doNothing() >>", doNothing()); // undefined
 console.log("8. undefined >= 0 >>", undefined >= 0); //false
-console.log("9. null + null >>", null + null); //0
-console.log("10. null/null >>", null / null); // 0
+console.log("9. 
+   >>", null + null); //0
+console.log("10. null/null >>", null / null); // 0//Деление 0 / 0 в математике является неопределённой операцией, поэтому результат будет NaN (Not-a-Number).
+
+
 console.log("11. undefined === 0 >>", undefined === 0); // false
 console.log("12. null > 0 >>", null > 0); // false
 console.log("13. null - null >>", null - null); // 0
@@ -107,15 +167,15 @@ function sum(a, b) {
 }
 
 console.log("27. sum(1) >>", sum(1)); //nan   
-console.log("28. null ==  >>", null == false); // true
-console.log("29. undefined == false >>", undefined == false); //true
+console.log("28. null ==  >>", null == false); // false
+console.log("29. undefined == false >>", undefined == false); //false
 console.log("30. null == undefined >>", null == undefined); // true
 
 
 
 /// 
 ///typeof
-console.log("1. typeof function() {} >>", typeof function () {}); // object // func
+console.log("1. typeof function() {} >>", typeof function () {}); // func
 console.log("2. typeof 3.14 >>", typeof 3.14); // number
 console.log("3. typeof '' >>", typeof ""); // string
 console.log("4. typeof 'something' >>", typeof "something"); // string
@@ -126,16 +186,16 @@ console.log(
 console.log("6. typeof 1 >>", typeof typeof 1); //string
 console.log("7. typeof null >>", typeof null); //object 
 console.log("8. typeof alert >>", typeof alert); // function
-console.log("9. typeof true >>", typeof true); //true
+console.log("9. typeof true >>", typeof true); //boolean
 console.log("10. typeof 37 >>", typeof 37); // number
 console.log("11. typeof {a: 1} >>", typeof { a: 1 }); // object
 console.log("12. typeof undefined >>", typeof undefined); // undefined
 console.log("13. typeof new Date() >>", typeof new Date()); // function
 console.log("14. typeof [1, 2, 4] >>", typeof [1, 2, 4]); //object
-console.log("15. typeof Math.sin() >>", typeof Math.sin()); // 
-console.log("16. typeof Math >>", typeof Math); // 
+console.log("15. typeof Math.sin() >>", typeof Math.sin()); // number
+console.log("16. typeof Math >>", typeof Math); // object Это возвращает строку "object", потому что Math является встроенным объектом в JavaScript, который содержит математические константы и функции.
 console.log("17. typeof false >>", typeof false); // boolean 
-console.log("18. typeof class C {} >>", typeof class C {}); //
+console.log("18. typeof class C {} >>", typeof class C {}); // fucntion
 
 let obj1 = {
   set: "name",
@@ -143,7 +203,7 @@ let obj1 = {
 };
 console.log("19. typeof obj.set >>", typeof obj1.set); // string
 console.log("20. typeof obj.func >>", typeof obj1.func); // function
-console.log("21. typeof Symbol('new') >>", typeof Symbol("new")); // 
+console.log("21. typeof Symbol('new') >>", typeof Symbol("new")); // symbol
 
 
 // Converting
@@ -153,8 +213,8 @@ console.log("2. !0 >>", !0); //true
 console.log("3. !!0 >>", !!0); // false
 console.log("4. !!{} >>", !!{}); //true
 console.log("5. !![] >>", !![]); // true
-console.log("6. Boolean(+0) >>", Boolean(+0)); //true
-console.log("7. !!new Boolean(0) >>", !!new Boolean(0)); //
+console.log("6. Boolean(+0) >>", Boolean(+0)); //false
+console.log("7. !!new Boolean(0) >>", !!new Boolean(0)); //Создание объекта Boolean: new Boolean(0) создает объект типа Boolean. true
 console.log("8. typeof [] >>", typeof []); // object
 console.log("9. typeof null >>", typeof null); // object
 console.log("10. typeof function () {} >>", typeof function () {}); //fucntion
@@ -164,7 +224,7 @@ console.log("13. 0 === 0 >>", 0 === 0); // true
 console.log("14. Number('0') >>", Number("0")); // 0
 console.log("15. NaN === NaN >>", NaN === NaN); // false
 console.log("16. 0 === '0' >>", 0 === "0"); // false
-console.log("17. [] === [] >>", [] === []); /
+console.log("17. [] === [] >>", [] === []); /false
 
 const key = "age";
 const person = { name: "Анна", age: 30 };
