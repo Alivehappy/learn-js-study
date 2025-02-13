@@ -102,6 +102,34 @@ for(let i = 0; i<=5; i++ ){
 let number = +prompt('number', '1')
 for (let i = 1; i <= 10; i++){
         console.log(`${i} * ${number} = ${i * number }`)
-}*/
+}
 
-/
+function fun(n) {
+	let result = 1
+	for (let i = 1; i <= n; i++) {
+		result *= i
+	}
+	return result
+}
+fun(5)
+*/
+//1. key in user
+//Это оператор проверки наличия свойства в объекте. Он возвращает true, если свойство key существует в объекте user, и false, если его нет.
+let user = {
+	name: 'anna',
+	age: 20,
+}
+console.log('name' in user)
+//for (let key in user)
+//Это цикл, который перебирает все перечисляемые свойства объекта. На каждой итерации переменная key получает имя очередного свойства
+
+let user = {
+	name: 'Анна',
+	age: 25,
+}
+for (let key in user) {
+	console.log(key + ':' + user[key])
+}
+//user[key] — это правильный способ получить значение свойства объекта по ключу.
+
+//user['key'] ищет свойство с именем 'key', которого нет в объекте, и возвращает undefined.
