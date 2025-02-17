@@ -43,7 +43,7 @@ console.log(o.a); // logs 37
 
 function C2() {
 !!  this.a = 37;
-  return { a: 38 };
+  return { a: 38 };////////
 }
 
 o = new C2();
@@ -162,3 +162,5 @@ const obj = {
 };
 
 console.log(obj > 0); // true
+
+

@@ -86,3 +86,120 @@ alert(Symbol.keyFor(globalSymbol)) //name, глобальный симво
 alert(Symbol.keyFor(localSymbol)) // undefined для неглобального символа
 
 alert(localSymbol.description) // name
+//Если же мы действительно хотим вывести символ с помощью alert, то необходимо явно преобразовать его с помощью метода .toString(), вот так
+
+let id = Symbol('id')
+alert(id.toString()) // Symbol(id), теперь работает
+alert(id.description) //id
+
+//
+
+const id = 'userId'
+let user = {
+	[id]: 123, // просто "id: 123" не сработает
+}
+user[id] = 5
+console.log(user[id].toString())
+
+let id = Symbol('id') //всегда перед объектом надо объявить символ
+let id = Symbol.for('id') //читаем символ из глобального реестра и записываем его в переменнуюли символа не существует, он будет создан
+let idAgain = Symbol.for('id')
+// читаем его снова и записываем в другую переменную (возможно, из другого места кода)
+
+// проверяем -- это один и тот же символ
+alert(id === idAgain) // true
+	/	//Символы, содержащиеся в реестре, называются глобальными символами. Если вам нужен символ, доступный везде в коде – используйте глобальные символы
+
+	// Symbol.keyFor(sym), который, наоборот, принимает глобальный символ и возвращает его имя.
+// получаем символ по имени
+
+let sym = Symbol.for('name');
+let sym2 = Symbol.for('id');
+
+// получаем имя по символу
+console.log(Symbol.keyFor(sym)); // name
+
+console.log(Symbol.keyFor(sym2));// id
+
+// Внутри метода Symbol.keyFor используется глобальный реестр символов для нахождения имени символа. Так что этот метод не будет работать для неглобальных символов.Если символ неглобальный, метод не сможет его найти и вернёт undefined
+
+//Symbol.toPrimitive позволяет описать правила для объекта, согласно которым он будет преобразовываться к примитиву.
+
+Квадратные скобки obj["property"]. Квадратные скобки позволяют взять ключ из переменной, например, obj[varWithKey].
+
+
+user.sayHi = function() {
+  alert("Привет!");
+
+
+	function sayHi() {
+  alert("Привет!");
+}
+// затем добавляем в качестве метода
+user.sayHi = sayHi;
+
+
+user = {
+  sayHi: function() {
+    alert("Привет");
+  }
+
+
+user = {
+  sayHi() { // то же самое, что и "sayHi: function(){...}"
+    alert("Привет");
+  }
+};
+
+
+this.sayHi = function() {
+    alert( "Меня зовут: " + this.name );
+  };
+
+
+function makeUser() {
+  return {
+    name: "John",
+    ref: this
+  };
+}
+
+console.log(makeUser());
+
+VM266:8 {name: 'John', ref: Window}
+//возвращает глобальный объект
+
+
+function makeUser() {
+  return {
+    name: "John",
+    ref(){ this}
+  };
+}
+
+console.log(makeUser());
+
+VM280:8 {name: 'John', ref: ƒ}
+//
+//  Метод ref возвращает текущий объект
+
+//поэтому его можно использовать для доступа к свойствам объекта через цепочку вызовов.
+
+
+let user = makeUser();
+
+console.log(user.ref().name); // "John"
+
+user.ref():
+
+Вызывается метод ref, который возвращает this (текущий объект).
+
+В данном случае this — это объект user
+
+
+Обычно конструкторы не используют return, потому что они автоматически возвращают новый объект (this).
+
+Если return возвращает объект, конструктор вернет этот объект вместо this.
+
+Если return возвращает примитив, он игнорируется, и конструктор возвращает this.
+
