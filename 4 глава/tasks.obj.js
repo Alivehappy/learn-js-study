@@ -87,6 +87,112 @@ let ladder = {
 }
 ladder.up().up().down().showStep().down().showStep()
 
+function User(name, age) {
+	this.name = name
+	this.age = age
+	this.sayHi = function () {
+		console.log(`hello, i am ${this.name} and i am ${this.age} old`)
+	}
+}
+let user = new User('Anna', 25)
+user.sayHi()
+
+//2
+
+function Ladder() {
+	this.step = +prompt('num?', '0')
+	this.stepUp = function () {
+		this.step += 1
+		return this
+	}
+	this.stepDown = function () {
+		this.step -= 1
+		return this
+	}
+	this.showStep = function () {
+		console.log(this.step)
+		return this
+	}
+}
+let ladder = new Ladder()
+
+ladder.stepUp().stepUp().stepDown().showStep()
+
+let a = {
+	step: +prompt('p?', '0'),
+	stepUp() {
+		this.step++
+		return this.step
+	},
+	stepDown() {
+		this.step--
+		return this.step
+	},
+	showStep() {
+		return this.step
+	},
+}
+console.log(a.stepUp(), a.stepDown(), a.showStep())
+
+{
+	function Book() {
+		this.title = +prompt('title')
+		this.author = +prompt('author')
+		this.age = +prompt('age')
+		this.getInfo = function () {
+			console.log(`${this.title} by ${this.author}, ${this.age}`)
+		}
+	}
+	let obj = new Book()
+	obj.getInfo()
+}
+
+{
+	function Yes() {
+		this.num = 5
+		this.up = function () {
+			this.num++
+			return this.num
+		}
+		this.down = function () {
+			this.num--
+			return this.num
+		}
+	}
+	let yes1 = new Yes()
+	console.log(yes1.up())
+	console.log(yes1.up())
+	console.log(yes1.down())
+}
+
+{
+	function info(name, age) {
+		this.name = name
+		this.age = age
+		console.log(`i am ${this.name}, ${this.age} years old`)
+	}
+	info('a1', 14) ///or
+}
+
+{
+	function Person(name, age) {
+		;(this.name = name),
+			(this.age = age),
+			(this.introduce = function () {
+				console.log(`i am ${this.name}, ${this.age} years old`)
+			}),
+			(this.celebrateBirthday = function () {
+				console.log(`Теперь мне ${++this.age} лет!`)
+			})
+	}
+
+	let user = new Person('B', 12)
+	user.celebrateBirthday()
+	user.introduce()
+	user.celebrateBirthday()
+	user.introduce()
+}
+
 /*let i = 0;
 while (true) {
   console.log(i);

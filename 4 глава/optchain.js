@@ -1,42 +1,49 @@
-let user = {};// пользователь без свойства "address"
-alert(user.adress.street);// Ошибка!
+{
+  let user = {};// пользователь без свойства "address"
+//alert(user.adress.street);// Ошибка!
 //Это ожидаемый результат. JavaScript работает следующим образом. Поскольку user.address имеет значение undefined, попытка получить user.address.street завершается ошибкой
 /*В веб-разработке мы можем получить объект, соответствующий элементу веб-страницы, с помощью специального вызова метода, такого как document.querySelector('.elem'), и он возвращает null, когда такого элемента нет.
-*/
-let html = document.querySeleector('.elem').innerHTML// ошибка, если он равен null
+*/}
 
-let user = {};
-alert(user.adress ? user.adress.street : undefined);
-let html = document.querySelector('.elem') ?document.querySelector('.elem').innerHTML : null
-
-let user = {};
-alert(user.address ? user.address.street ? user.address.street.name : null : null);
-
-let user = {};
-alert(user.address && user.address.street && user.address.street.name )
-
+{
+  let html = document.querySeleector('.elem').innerHTML// ошибка, если он равен null
+}
+{
+  let user = {};
+  alert(user.adress ? user.adress.street : undefined);
+  let html = document.querySelector('.elem') ? document.querySelector('.elem').innerHTML : null
+}
+{
+  let user = {};
+  alert(user.address ? user.address.street ? user.address.street.name : null : null);
+}
+  {let user = {};
+  alert(user.address && user.address.street && user.address.street.name)
+}
 //Опциональная цепочка ?. останавливает вычисление и возвращает undefined, если значение перед ?. равно undefined или null.
 
-let user = {}; // пользователь без адреса
-alert(user?.address?.street); // undefined (без ошибки)
-
-let html = document.querySelector('.elem')?.innerHTML; // будет undefined, если элемента нет Если document.querySelector('.elem') возвращает null, то опциональная цепочка (?.) остановит дальнейшее выполнение и вернёт undefined.
-
-let user =null;
-alert(user?. address);
-alert(user?.address.street)
-
+{
+  let user = {}; // пользователь без адреса
+  alert(user?.address?.street); // undefined (без ошибки)
+}
+ { let html = document.querySelector('.elem')?.innerHTML; // будет undefined, если элемента нет Если document.querySelector('.elem') возвращает null, то опциональная цепочка (?.) остановит дальнейшее выполнение и вернёт undefined.
+}
+ { let user = null;
+  alert(user?.address);
+  alert(user?.address.street)
+}
 //Переменная должна быть объявлена (к примеру, как let/const/var user или как параметр функции). Опциональная цепочка работает только с объявленными переменными.Как было сказано ранее, ?. немедленно останавливает вычисление, если левая часть не существует.
 
 //Так что если после ?. есть какие-то вызовы функций или операции, то они не произойдут
 
-let user = null;
-let x = 0;
-user?.sayHi(x++) // нет "user", поэтому выполнение не достигает вызова sayHi и x++
-alert(x); // 0, значение не увеличилось
+{
+  let user = null;
+  let x = 0;
+  user?.sayHi(x++) // нет "user", поэтому выполнение не достигает вызова sayHi и x++
+  alert(x); // 0, значение не увеличилось
 
-//?.() используется для вызова функции, которая может не существовать
-
+  //?.() используется для вызова функции, которая может не существовать
+}
 
 let userAdmin = {
     admin(){
@@ -55,10 +62,10 @@ userGuest.admin?.();/// ничего не произойдет (такого м�
 let key = 'firstName';
 let  user1 = {
     firstName: 'John'
-};
+}
 let user2 = null;
-alert(user1.[key])//// John
-alert( user2?.[key] ); // undefined
+alert(user1[key])//// John
+alert( user2?.[key]); // undefined
 
 delete user?.name//удаляет user.name если пользователь существует
 let user = null;
@@ -231,4 +238,4 @@ const person = { name: "Анна", age: 30 };
 
 const { [key]: userAge } = person;
 
-console.log(userAge);  // 
+console.log(userAge);*/
