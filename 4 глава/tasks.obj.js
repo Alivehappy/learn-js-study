@@ -1,13 +1,15 @@
 'use strict'
 
-function makeUser() {
-	return {
-		name: 'John',
-		ref: this,
+{
+	function makeUser() {
+		return {
+			name: 'John',
+			ref: this,
+		}
 	}
+	let user = makeUser()
+	alert(user.ref.name)
 }
-let user = makeUser()
-alert(user.ref.name)
 /*Код пытается получить доступ к свойству name объекта, на который ссылается user.ref.
 user.ref равно undefined Таким образом, ref: this фактически принимает текущее this функции makeUser,*/
 function makeUser() {
@@ -70,70 +72,74 @@ let ladder = {
 return this;// возвращаем объект ladder
     }
 }**/
-let ladder = {
-	step: 0,
-	up() {
-		this.step++
-		return this
-	},
-	down() {
-		this.step--
-		return this
-	},
-	showStep: function () {
-		alert(this.step)
-		return this
-	},
-}
-ladder.up().up().down().showStep().down().showStep()
-
-function User(name, age) {
-	this.name = name
-	this.age = age
-	this.sayHi = function () {
-		console.log(`hello, i am ${this.name} and i am ${this.age} old`)
+{
+	let ladder = {
+		step: 0,
+		up() {
+			this.step++
+			return this
+		},
+		down() {
+			this.step--
+			return this
+		},
+		showStep: function () {
+			alert(this.step)
+			return this
+		},
 	}
+	ladder.up().up().down().showStep().down().showStep()
 }
-let user = new User('Anna', 25)
-user.sayHi()
-
+{
+	function User(name, age) {
+		this.name = name
+		this.age = age
+		this.sayHi = function () {
+			console.log(`hello, i am ${this.name} and i am ${this.age} old`)
+		}
+	}
+	let user = new User('Anna', 25)
+	user.sayHi()
+}
 //2
 
-function Ladder() {
-	this.step = +prompt('num?', '0')
-	this.stepUp = function () {
-		this.step += 1
-		return this
+{
+	function Ladder() {
+		this.step = +prompt('num?', '0')
+		this.stepUp = function () {
+			this.step += 1
+			return this
+		}
+		this.stepDown = function () {
+			this.step -= 1
+			return this
+		}
+		this.showStep = function () {
+			console.log(this.step)
+			return this
+		}
 	}
-	this.stepDown = function () {
-		this.step -= 1
-		return this
-	}
-	this.showStep = function () {
-		console.log(this.step)
-		return this
-	}
+	let ladder = new Ladder()
+
+	ladder.stepUp().stepUp().stepDown().showStep()
 }
-let ladder = new Ladder()
-
-ladder.stepUp().stepUp().stepDown().showStep()
-
-let a = {
-	step: +prompt('p?', '0'),
-	stepUp() {
-		this.step++
-		return this.step
-	},
-	stepDown() {
-		this.step--
-		return this.step
-	},
-	showStep() {
-		return this.step
-	},
+{
+	let a = {
+		step: +prompt('p?', '0'),
+		stepUp() {
+			this.step++
+			return this.step
+		},
+		stepDown() {
+			this.step--
+			return this.step
+		},
+		showStep() {
+			return this.step
+		},
+	}
+	console.log(a.stepUp(), a.stepDown(), a.showStep())
 }
-console.log(a.stepUp(), a.stepDown(), a.showStep())
-
 {
 	function Book() {
 		this.title = +prompt('title')
@@ -221,20 +227,24 @@ fun(5)
 */
 //1. key in user
 //Это оператор проверки наличия свойства в объекте. Он возвращает true, если свойство key существует в объекте user, и false, если его нет.
-let user = {
-	name: 'anna',
-	age: 20,
+{
+	let user = {
+		name: 'anna',
+		age: 20,
+	}
+	console.log('name' in user)
 }
-console.log('name' in user)
 //for (let key in user)
 //Это цикл, который перебирает все перечисляемые свойства объекта. На каждой итерации переменная key получает имя очередного свойства
 
-let user = {
-	name: 'Анна',
-	age: 25,
-}
-for (let key in user) {
-	console.log(key + ':' + user[key])
+{
+	let user = {
+		name: 'Анна',
+		age: 25,
+	}
+	for (let key in user) {
+		console.log(key + ':' + user[key])
+	}
 }
 //user[key] — это правильный способ получить значение свойства объекта по ключу.
 
