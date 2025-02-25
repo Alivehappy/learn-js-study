@@ -41,3 +41,16 @@ console.log(this); // window
 	console.log(method1()); //TypeError: method1 is not a function
 }
 //В глобальном контексте выполнения (за пределами каких-либо функций) this ссылается на глобальный объект вне зависимости от режима (строгий или нестрогий
+
+{
+	let obj = {
+		name: 'Tom',
+		greet() {
+			console.log(`Hello, my name is ${this.name}`);
+		},
+	};
+
+	let greetFunction = obj.greet;
+	greetFunction();
+}
+//'Hello, my name is выводит без свойства

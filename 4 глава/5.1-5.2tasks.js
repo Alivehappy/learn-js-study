@@ -87,14 +87,14 @@ ucFirst('вася');
 
 function checkSpam(str) {
 	let lowerstr = str.toLowerCase();
-	if (lowerstr.includes('viagra') || str.includes('xxx')) {
+	if (lowerstr.includes('biagra') || str.includes('xxx')) {
 		return true;
 	}
 	return false;
 }
-console.log(checkSpam('buy ViAgRA now')); //true
+console.log(checkSpam('buy BiAgRA now')); //true
 console.log(checkSpam('free xxxxx')); //true
-console.log(checkSpam('innocent rabbit')); // false
+console.log(checkSpam('rabbit')); // false
 
 // Чтобы сделать проверку нечувствительной к регистру, нужно:
 
@@ -121,12 +121,12 @@ alert(extractCurrencyValue('$120')); //120
 Напиши функцию sumDigits, которая принимает число и возвращает сумму его цифр.
 Пример:
 */
-function sumDigits(num){
+function sumDigits(num) {
 	let str = num.toString();
 	let sum = 0;
-	for (let i = 0; i < str.length; i++){
+	for (let i = 0; i < str.length; i++) {
 		let digit = Number(str[i]);
-		 sum += digit
+		sum += digit;
 	}
 
 	return sum;
@@ -142,136 +142,112 @@ sumDigits(9875); // 29 (9 + 8 + 7 + 5)
 
 //return внутри цикла завершает функцию на первой итерации, поэтому цикл не пройдет по всем цифрам.
 
+//Задача 3: Палиндром
+//Напиши функцию isPalindrome, которая проверяет, является ли строка палиндромом (читается одинаково слева направо и справа налево).
 
-
-
-
-/*Задача 2: Поиск самого длинного слова
-Напиши функцию findLongestWord, которая принимает строку и возвращает самое длинное слово в ней.
-
-findLongestWord("Мама мыла раму"); // "мыла"
-findLongestWord("JavaScript это интересно"); // "JavaScript"
-Подсказка:
-
-Разбей строку на массив слов с помощью split.
-
-Пройдись по массиву и сравни длины слов.*/
-function findLongestWord(str) {
-	
+function isPalindrome(str) {
+	let a = str.toLowerCase();
+	a = a.replace(/[^a-zA-Zа-яА-Я]/g, '');
+	let b = a.split('').reverse().join('');
+	if (a === b) return true;
+	return false;
 }
 
+isPalindrome('топот'); // true
+isPalindrome('А роза упала на лапу Азора'); // true
+isPalindrome('JavaScript'); // false
 
+//Задача 4: Форматирование числа
+//Напиши функцию formatNumber, которая принимает число и возвращает строку с разделителями тысяч.
 
+function formatNumber(num) {
+	num = num.toString();
+	let num1 = num.split('');
+	for (let i = num1.length - 3; i > 0; i -= 3) {
+		num1.splice(i, 0, ',');
+	}
+	return num1.join('');
+}
 
-
-
-
-Задача 3: Палиндром
-Напиши функцию isPalindrome, которая проверяет, является ли строка палиндромом (читается одинаково слева направо и справа налево).
-Пример:
-
-javascript
-Copy
-isPalindrome("топот"); // true
-isPalindrome("А роза упала на лапу Азора"); // true
-isPalindrome("JavaScript"); // false
-Подсказка:
-
-Удали пробелы и приведи строку к одному регистру.
-
-Сравни строку с её обратной версией.
-
-Задача 4: Форматирование числа
-Напиши функцию formatNumber, которая принимает число и возвращает строку с разделителями тысяч.
-Пример:
-
-javascript
-Copy
 formatNumber(1234567); // "1,234,567"
 formatNumber(1000); // "1,000"
 formatNumber(123); // "123"
-Подсказка:
 
-Преобразуй число в строку и разбей на части.
+//Генератор случайных строк
+//Напиши функцию generateRandomString, которая принимает число n и возвращает строку из n случайных символов (буквы и цифры).
 
-Используй метод toLocaleString, если хочешь упростить задачу.
+function generateRandomString(n) {
+	const characters =
+		'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	let b = '';
 
-Задача 5: Подсчёт гласных
-Напиши функцию countVowels, которая принимает строку и возвращает количество гласных букв в ней.
-Пример:
-
-javascript
-Copy
-countVowels("Привет"); // 2 (и, е)
-countVowels("JavaScript"); // 3 (a, a, i)
-Подсказка:
-
-Создай массив или строку с гласными буквами.
-
-Пройдись по строке и проверяй, есть ли текущий символ в этом массиве.
-
-Задача 6: Генератор случайных строк
-Напиши функцию generateRandomString, которая принимает число n и возвращает строку из n случайных символов (буквы и цифры).
-Пример:
-
-javascript
-Copy
+	for (let i = 0; i < n; i++) {
+		let a = Math.floor(Math.random() * characters.length);
+		b += characters[a];
+	}
+	return b;
+}
 generateRandomString(5); // "aB3dE"
 generateRandomString(10); // "qW2eR4tY7u"
-Подсказка:
 
-Создай строку со всеми возможными символами (буквы и цифры).
+let a = 0.5 + 0.2 == 0.7;
+let b = (0.5 * 10 + 0.2 * 10) / 10;
+console.log(a);
+console.log(b);
+//Генерация случайного числа в диапазоне:
+function numo(a, b) {
+	let min = Math.min(a, b);
+	let max = Math.max(a, b);
+	let gennum = Math.random() * (max - min) + min;
+	return +gennum.toFixed(2);
+}
+console.log(numo(3, 7)); //3.23
 
-Используй цикл и метод Math.random для выбора случайных символов.
+//Напишите функцию randomInRange(a, b), которая возвращает случайное число между a и b (включительно). Результат должен быть округлён до 2 знаков после запятой.
 
-Задача 7: Уникальные символы
-Напиши функцию uniqueCharacters, которая принимает строку и возвращает новую строку, в которой удалены все повторяющиеся символы.
-Пример:
+function randomInRange(a, b) {
+	let min = Math.min(a, b);
+	let max = Math.max(a, b);
+	let num1 = Math.random() * (max - min + 1) + min;
+	return num1.toFixed(2);
+}
+console.log(randomInRange(5, 6));
+//(max - min) + min просто возвращает max.
 
-javascript
-Copy
-uniqueCharacters("hello"); // "helo"
-uniqueCharacters("javascript"); // "javscript"
-Подсказка:
+//(max - min + 1) увеличивает диапазон на 1, что позволяет включить max при использовании с Math.random().
+//Напишите функцию roundToDecimal(number, decimals), которая округляет число number до указанного количества знаков после запятой decimals.
+function roundToDecimal(number, decimals) {
+	number = number.toFixed(decimals);
+	return Number(number);
+}
+console.log(roundToDecimal(3.14159, 2));
+console.log(typeof roundToDecimal(3.14159, 2)); // "number"
 
-Используй объект или Set для отслеживания уникальных символов.
+function isEven(number) {
+	if (Number.isFinite(number)) {
+		if (number % 2 === 0) {
+			return true;
+		}
+		return false;
+	} else {
+		return `${number} is not a number`;
+	}
+}
+console.log(isEven(4)); // true
+console.log(isEven(7)); // false
+/* есть такое решение еще function isEven(number) {
+    // Проверяем, что number — конечное число
+    if (!Number.isFinite(number)) {
+        console.log(`${number} is not a number`);
+        return; // Прекращаем выполнение функции
+    }
 
-Задача 8: Шифр Цезаря
-Напиши функцию caesarCipher, которая принимает строку и число shift, и возвращает строку, где каждый символ сдвинут на shift позиций в алфавите.
-Пример:
+    // Проверяем, чётное ли число
+    return number % 2 === 0;
+}
 
-javascript
-Copy
-caesarCipher("abc", 1); // "bcd"
-caesarCipher("xyz", 2); // "zab"
-Подсказка:
-
-Используй таблицу символов (Unicode) и методы charCodeAt и fromCharCode.
-
-Учитывай, что алфавит зациклен (после z идёт a).
-
-Задача 9: Разворот слов в строке
-Напиши функцию reverseWords, которая принимает строку и возвращает строку, где каждое слово развёрнуто, но порядок слов сохранён.
-Пример:
-
-javascript
-Copy
-reverseWords("Мама мыла раму"); // "амаМ алым умар"
-reverseWords("JavaScript это интересно"); // "tpircSavaJ отэ онтсереси"
-Подсказка:
-
-Разбей строку на слова, разверни каждое слово и собери обратно.
-
-Задача 10: Проверка на анаграмму
-Напиши функцию isAnagram, которая принимает две строки и проверяет, являются ли они анаграммами (состоят из одних и тех же символов в разном порядке).
-Пример:
-
-javascript
-Copy
-isAnagram("кот", "ток"); // true
-isAnagram("кот", "собака"); // false
-Подсказка:
-
-Отсортируй символы в обеих строках и сравни их.
-
-*/
+// Примеры
+console.log(isEven(4)); // true
+console.log(isEven(7)); // false
+console.log(isEven(NaN)); // "NaN is not a number", undefined
+console.log(isEven("hello")); // "hello is not a number", undefined*/
