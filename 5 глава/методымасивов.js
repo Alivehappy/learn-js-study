@@ -87,3 +87,92 @@ console.log(arr5);
 //Метод splice в JavaScript является мутирующим (mutating), то есть он изменяет исходный массив
 //Возвращает массив удалённых элементов.
 //[1, 2, 11, 12, 5, 6, 7, 8]
+
+let arr6 = [4, 5, 16, 3, 18, 6, 2, 8, 13];
+let a = arr6.every(elem => elem > 0);
+console.log(a); //true
+//every(). Этот метод является немутирующим (non-mutating), то есть он не изменяет исходный массив, а только проверяет его элементы и возвращает true или false.
+//Если все элементы удовлетворяют условию, every() возвращает true.
+
+//Если хотя бы один элемент не удовлетворяет условию, every() возвращает false.
+let arr7 = [4, 5, 16, 3, 18, 6, 2, 8, 13];
+arr7.some(elem => elem === 5);
+//Метод some проверяет, удовлетворяет ли хотя бы один элемент массива условию, заданному в функции
+//1.Дан массив чисел. Создайте новый массив, в котором все отрицательные числа заменены на 0, а положительные числа умножены на 2
+
+let arr8 = [1, -2, 3, -4, 5];
+arr8.map(elem => {
+	if (elem < 0) {
+		return 0;
+	} else {
+		return elem * 2;
+	}
+});
+
+//2.Дан массив чисел. Найдите сумму всех элементов, которые больше 10. Используйте метод reduce
+
+let arr9 = [5, 12, 8, 15, 3];
+let allSum = arr9.reduce((sum, elem) => {
+	if (elem > 10) {
+		return sum + elem;
+	} else {
+		return sum;
+	}
+}, 0);
+console.log(allSum);
+
+//3.Дан массив с повторяющимися элементами. Создайте новый массив, содержащий только уникальные элементы
+let arr10 = [1, 2, 2, 3, 4, 4, 5];
+let someElem = arr10.filer((elem, index, array) => {
+	return array.indexOf(elem) === index;
+});
+//4.Дан массив чисел. Разделите его на два массива: один с четными числами, другой с нечетными.
+/*let arr11 = [1, 2, 3, 4, 5, 6];
+let even = arr11.filter(elem => {
+	return elem % 2 === 0;
+});
+let uneven = arr11.filter(elem => {
+	return elem % 2 !== 0;
+});
+console.log(even, uneven);*/
+//метод reduce позволяет накапливать результат в виде объекта или массива, содержащего оба подмассива.
+
+let arr11 = [1, 2, 3, 4, 5, 6];
+let newOrder = arr11.reduce(
+	(sum, elem) => {
+		if (elem % 2 === 0) {
+			sum.even.push(elem);
+		} else {
+			sum.uneven.push(elem);
+		}
+	},
+	{
+		even: [],
+		uneven: [],
+	}
+);
+//5.Дан массив объектов с полями name и age. Отсортируйте массив по возрасту (age) в порядке возрастания. Используйте метод sort.
+
+let people = [
+	{ name: 'Alice', age: 25 },
+	{ name: 'Bob', age: 30 },
+	{ name: 'Charlie', age: 20 },
+];
+let grad = people.sort((a, b) => a.age - b.age);
+console.log(grad);
+//. В методе sort нужно передавать функцию, которая принимает два аргумента (a и b), а не их свойства (a.age и b.age)
+
+//6.Даны два массива. Создайте новый массив, который содержит элементы из обоих массивов, но без дубликатов
+let ar1 = [1, 2, 3];
+let ar2 = [3, 4, 5];
+let ar3 = ar1.concat(ar2);
+ar3.filter((elem, index, array) => {
+	return array.indexOf(elem) === index;
+});
+//array.indexOf(elem) ищет первый индекс (первое вхождение)elem и сравнивает его с текущим индексом массива
+//7.Дан массив чисел. Найдите максимальный элемент, используя метод reduce.
+let ar4 = [10, 20, 5, 30, 15];
+let newAr = ar4.reduce((acc, elem) => {
+	return elem > acc ? elem : acc;
+}, ar4[0]);
+console.log(newAr);
