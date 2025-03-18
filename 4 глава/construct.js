@@ -15,33 +15,44 @@ function Order() {
 	this.items = [];
 
 	this.addItem = function (item, count, price) {
-		this.items.push({ item: item, count: count, price: price });
+		let existItem = this.items.find(i => i.item === item); //возвращаеи объект или undefined  из массива объектов
+		if (!existItem) {
+			this.items.push({ item: item, count: count, price: price });
+		} else {
+			existItem.count += count;
+		}
 	};
 	this.removeItem = function (item, count, price) {
-		for (let i = 0; i < this.items.length; i++) {
-			if (this.items[i].item == item && this.items[i].price == price) {
-				if (this.items[i].count < count) {
-					this.items[i].count-1
-					this.items.splice(i, 1);
-			} else {
-				this.items.splice(
-					this.items[i].item && this.items[i].count && this.items[i].price
-				);
-			}
+		let existItem = this.items.find(i => i.item === item);
+		if (!existItem) {
+			console.log(`нет продукта ${item}`);
+		} else if (count === undefined) {
+			this.items = this.items.filter(i => i.item !== item);
+		} else if (existItem.count > count) {
+			existItem.count -= count;
+			console.log(`осталось ${existItem.count} товаров  ${item}`);
+		} else if (existItem.count < count) {
+			console.log(
+				`Нельзя удалить${count} товаров ${item}.В заказе только ${existItem.count}`
+			);
+		}
+		if (existItem.count === 0) {
+			this.items = this.items.filter(i => i.item !== item);
 		}
 	};
-
+	//getCheck() - получить информацию сколько каких итемов в чеке, общую цену, опционаольно цену за каждую позицию (за 3 пивка - 300р). Формат произвольный, чтобы был читабельный
 	this.getCheck = function () {
-		let total = 0;
-		for (let item of this.items) {
-			total += this.items.price * this.items.count;
-		}
-		return this.items, total;
+		let totalPrice = 0;
+
+		this.items.forEach(elem => {
+			let itemTotal = elem.count * elem.price;
+			totalPrice += itemTotal;
+			console.log(` За ${elem.count} ${elem.item} : ${totalPrice}`);
+		});
 	};
 }
-let order1 = new Order();
-order1.addItem('пиво', 3, 100);
-order1.removeItem('пиво', 2, 100);
-console.log(order1.getCheck());
-//this.items[i]:
-//Это обращение к элементу массива this.items с индексом i. Например, если i = 0, то this.items[0] — это первый элемент в массиве
+
+let order = new Order();
+order.addItem('Пиво', 3, 100);
+console.log(order.getCheck());
+//Для удаления всех товаров с определённым именем проще использовать filter, чем искать индексы и удалять их через splice.
