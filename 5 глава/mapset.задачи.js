@@ -56,6 +56,12 @@ function checkArr(arr1, arr2) {
 	return true; //если ни одно фолсе то после цикла тру
 }
 console.log(checkArr(arr1, arr2));
+
+// второе решение
+function intersection(arr1, arr2) {
+	return arr1.filter(elem => arr2.includes(elem));
+}
+intersection([1, 2, 3, 4], [3, 4, 5, 6]);
 //Напишите функцию, которая принимает два массива и возвращает массив их общих элементов (пересечение), используя Set.
 const arr3 = [1, 2, 3, 4];
 const arr4 = [3, 4, 5, 6];
@@ -156,4 +162,58 @@ function more1(arr) {
 		}
 		return sum;
 	}
+}
+chunkArray([1, 2, 3, 4, 5, 6, 7], 3); // [[1, 2, 3], [4, 5, 6], [7]]
+function chunkArray(arr, n) {
+	let arr1 = [];
+	for (let i = 0; i <= arr.length; i += n) {
+		arr1.push(i);
+	}
+	return arr1;
+}
+// (3) [0, 3, 6]
+
+{
+	chunkArray([1, 2, 3, 4, 5, 6, 7], 3); // [[1, 2, 3], [4, 5, 6], [7]]
+	function chunkArray(arr, n) {
+		let arr1 = [];
+		for (let i = 0; i <= arr.length; i += n) {
+			arr1.push(arr.slice(i, i + n));
+		}
+		return arr1;
+	}
+} /*(3) [Array(3), Array(3), Array(1)]
+0
+: 
+(3) [1, 2, 3]
+1
+: 
+(3) [4, 5, 6]
+2
+: 
+[7]*/
+
+countVowels('Hello World!'); // 3
+function countVowels(str) {
+	let vovels = ['a', 'e', 'i', 'o', 'u'];
+	let str1 = str.split('').filter(item => vovels.includes(item));
+	return str1.length;
+} //3
+
+const data = [
+	{ name: 'Alice', age: 25 },
+	{ name: 'Bob', age: 30 },
+	{ name: 'Charlie', age: 25 },
+];
+function groupByProperty(arr, word) {
+	let arr1 = {};
+	for (let i = 0; i < arr.length; i++) {
+		let elem = arr[i];
+		let key = elem[word];
+		if (!arr1[key]) {
+			arr1[key] = [];
+		}
+		arr1[key].push(elem);
+	}
+	return arr1;
 }
