@@ -147,38 +147,38 @@ const map1 = new Map();
 map1.set('John', 100);
 map1.set('Pete', 300);
 map1.set('Mary', 250);
-let workerName = null;
-const mostPayed = Array.from(map1).reduce((acc, [key]) => {
-	acc < mostPayed[key[1]];
-	return (workerName = mostPayed[key[0]]);
-}, 0);
-console.log(mostPayed);
-
-/*(3)
-/*
-
-
-Поиск максимального значения в Map:
-
-Создайте Map с парами ключ-значение: 'John' => 100, 'Pete' => 300, 'Mary' => 250.
-
-Используя метод Array.from и reduce, найдите имя человека с максимальной зарплатой.
-
-Выведите результат в консоль.
-
-Фильтрация Map:
-
-Создайте Map с парами ключ-значение: 'John' => 25, 'Pete' => 30, 'Mary' => 20.
-
-Используя Array.from и метод массива filter, найдите всех пользователей старше 25 лет.
-
-Выведите результат в консоль.
-
-Преобразование Map в объект:
-
-Создайте Map с парами ключ-значение: 'name' => 'John', 'age' => 30, 'city' => 'New York'.
-
-Преобразуйте Map в объект с помощью Object.fromEntries.
-
-Выведите результат в консоль.
-*/
+const mostPayed = Array.from(map1).reduce(
+	(acc, [key, value]) => {
+		if (value > acc.salary) {
+			return {
+				name: key,
+				salary: value,
+			};
+		}
+		return acc;
+	},
+	{
+		name: '',
+		salary: 0,
+	}
+);
+console.log(mostPayed.name); //Pete
+{
+	const map3 = new Map();
+	map3.set('John', 25);
+	map3.set('Pete', 30);
+	map3.set('Mary', 20);
+	const age25 = Array.from(map3).filter(([name, age]) => {
+		return age > 25;
+	});
+	console.log(age25);
+}
+{
+	const map = new Map();
+	map.set('name', 'John');
+	map.set('age', 30);
+	map.set('city', 'New York');
+	const obj = Object.fromEntries(map);
+	console.log(obj);
+}
+//{name: 'John', age: 30, city: 'New York'}
