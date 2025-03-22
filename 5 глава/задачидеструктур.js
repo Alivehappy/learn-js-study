@@ -1,25 +1,25 @@
 let user = {
 	name: 'Fil',
 	age: 20,
-	city: 'msk',
+	city1: 'msk',
 };
 let { name, city1 } = user;
 console.log(name);
 console.log(city1);
 
 let user1 = {
-	name: 'Fil',
+	name2: 'Fil',
 	adress: {
-		city: 'MSK',
+		city2: 'MSK',
 		street: 'Mira',
 	},
 };
 let {
 	name2,
-	adress: { city, street },
+	adress: { city2, street },
 } = user1;
 console.log(street);
-console.log(city);
+console.log(city2);
 
 let arr = [1, 2, 3, 4, 5];
 let [a, b, c, ...rest] = arr;
@@ -28,84 +28,135 @@ console.log(rest); // 4,5
 console.log(rest[1]); //5
 
 let user3 = {
-	name: 'John',
-	age: 30,
-	city: 'NYC',
+	name3: 'John',
+	age3: 30,
+	city3: 'NYC',
 };
-function printUser({ name1, age, city } = user3) {
-	console.log(name1);
-	console.log(age);
-	console.log(city);
+function printUser({ name3, age3, city3 } = user3) {
+	console.log(name3);
+	console.log(age3);
+	console.log(city3);
 }
 printUser(user3);
-/*John
+/*Johns
 VM502:8 30
 VM502:9 NYC*/
-/*Деструктуризация с значениями по умолчанию:
 
-Создайте объект user с полем name.
+{
+	const user1 = {
+		name3,
+	};
+	let { name3, age = 25, city = 'Msk' } = user1;
+	console.log(user1);
+}
+//Если вы пытаетесь деструктурировать свойство, которое не объявлено в объекте, JavaScript не выбросит ошибку. Вместо этого переменная получит значение undefined
 
-Используя деструктуризацию, извлеките name, age и city, задав значения по умолчанию для age (25) и city ('Unknown').
+const salaries = {
+	John: 100,
+	Pete: 200,
+	Mary: 300,
+};
+const sumSalries = Object.values(salaries).reduce((acc, elem) => {
+	return acc + elem;
+}, 0);
+console.log(sumSalries); //600
 
-Выведите их в консоль.
+{
+	const salaries = {
+		John: 100,
+		Pete: 200,
+		Mary: 300,
+	};
 
-5 задач на объекты, методы массивов и Object.entries
-Подсчёт суммы значений объекта:
+	const mostPayed = Object.entries(salaries).reduce(
+		(acc, [key, value]) => {
+			if (value > acc.salary) {
+				return { name: key, salary: value };
+			}
+			return acc;
+		},
+		{ name: '', salary: 0 }
+	);
+	console.log(mostPayed.name); //Mary
+}
 
-Создайте объект salaries с полями John, Pete, Mary, где значения — это зарплаты.
+/*Object.keys(obj) — возвращает массив ключей.
 
-Используя Object.values и метод массива reduce, найдите сумму всех зарплат.
+Object.values(obj) — возвращает массив значений.
 
-Выведите результат в консоль.
+Object.entries(obj) — возвращает массив пар [ключ, значение]. 
 
-Поиск максимального значения в объекте:
 
-Создайте объект salaries с полями John, Pete, Mary, где значения — это зарплаты.
+У Map есть три основных метода:
 
-Используя Object.entries и метод массива reduce, найдите имя человека с максимальной зарплатой.
+keys() — возвращает итератор по ключам.
 
-Выведите результат в консоль.
+values() — возвращает итератор по значениям.
 
-Фильтрация объекта:
+entries() — возвращает итератор по парам [ключ, значение].*/
 
-Создайте объект users с полями John, Pete, Mary, где значения — это возраст.
+const users4 = {
+	John: 20,
+	Pete: 26,
+	Mary: 30,
+};
+const filterd = Object.keys(users4).filter(key => users4[key] > 25);
+console.log(filterd); //['Pete', 'Mary']
 
-Используя Object.entries и метод массива filter, найдите всех пользователей старше 25 лет.
+{
+	const user5 = {
+		name: 'Fil',
+		age: '20',
+		city: 'Msk',
+	};
+	const changed = Object.fromEntries(
+		Object.entries(user5).map(([key, value]) => {
+			if (key === 'age') {
+				return [key, String(Number(value) + 1)];
+			}
+			return [key, value];
+		})
+	);
+	console.log(changed);
+} //{name: 'Fil', age: '21', city: 'Msk'}
 
-Выведите результат в консоль.
+const map = new Map();
+map.set('name', 'John');
+map.set('age', 30);
+map.set('city', 'New York');
+console.log(map);
+//Ключи и значения в Map могут быть любого типа, но если вы используете строки, их нужно указывать как строки через кавычки
 
-Преобразование объекта в массив:
+for (let key of map) {
+	console.log(key);
+}
 
-Создайте объект user с полями name, age, city.
+/*(2) ['name', 'John']0: "name"1: "John"length: 2[[Prototype]]: Array(0)
+VM91:9 (2) ['age', 30]
+VM91:9 (2) ['city', 'New York']
+  я разбила map массив ключ значение на массивы key*/
 
-Используя Object.entries, преобразуйте объект в массив пар [ключ, значение].
+//тут деструтуризация
+for (let [key, value] of map) {
+	console.log(`${key}, ${value}`);
+} /*name, John
+ age, 30
+ city, New York*/
 
-Выведите результат в консоль.
+const map1 = new Map();
+map1.set('John', 100);
+map1.set('Pete', 300);
+map1.set('Mary', 250);
+let workerName = null;
+const mostPayed = Array.from(map1).reduce((acc, [key]) => {
+	acc < mostPayed[key[1]];
+	return (workerName = mostPayed[key[0]]);
+}, 0);
+console.log(mostPayed);
 
-Обновление объекта:
+/*(3)
+/*
 
-Создайте объект user с полями name, age, city.
-
-Используя Object.entries и метод массива map, обновите значения объекта, увеличив возраст на 1.
-
-Преобразуйте массив обратно в объект с помощью Object.fromEntries.
-
-Выведите результат в консоль.
-
-5 задач на Map
-Создание и добавление элементов в Map:
-
-Создайте новый объект Map.
-
-Добавьте в него пары ключ-значение: 'name' => 'John', 'age' => 30, 'city' => 'New York'.
-
-Выведите результат в консоль.
-
-Перебор элементов Map:
-
-Создайте Map с парами ключ-значение: 'name' => 'John', 'age' => 30, 'city' => 'New York'.
-
-Используя цикл for...of, переберите все элементы Map и выведите их в консоль.
 
 Поиск максимального значения в Map:
 
@@ -130,35 +181,4 @@ VM502:9 NYC*/
 Преобразуйте Map в объект с помощью Object.fromEntries.
 
 Выведите результат в консоль.
-
-Примеры решений
-Деструктуризация объекта (задача 1):
-javascript
-Copy
-let user = { name: 'John', age: 30, city: 'New York' };
-let { name, city } = user;
-console.log(name, city); // John New York
-Поиск максимального значения в объекте (задача 2):
-javascript
-Copy
-let salaries = { John: 100, Pete: 300, Mary: 250 };
-let maxEntry = Object.entries(salaries).reduce((max, current) => {
-  return current[1] > max[1] ? current : max;
-});
-console.log(maxEntry[0]); // Pete
-Перебор элементов Map (задача 2):
-javascript
-Copy
-let map = new Map([
-  ['name', 'John'],
-  ['age', 30],
-  ['city', 'New York'],
-]);
-
-for (let [key, value] of map) {
-  console.log(`${key}: ${value}`);
-}
-// name: John
-// age: 30
-// city: New York
-Эти задачи помогут вам лучше понять деструктуризацию, работу с объектами, методами массивов и Map. Удачи*/
+*/
