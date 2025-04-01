@@ -76,11 +76,64 @@ function deepClone(obj) {
 
 Не копирует циклические ссылки (вызовет ошибку)*/
 
-//Напишите функцию filterJSON(jsonString, keys), которая парсит JSON и возвращает новый объект только с указанными ключами.
-
 //Модифицируйте функцию safeStringify(obj), чтобы она обрабатывала объекты с циклическими ссылками.
+function safeStringify(obj) {
+	const seen = new Weakset();
+	return JSON.stringify(
+		obj,
+		(key, value) => {
+			if (typeof value === 'object' && value !== null) {
+				if (seen.has(value)) {
+					return '[Circular Reference]';
+				}
+				seen.add(value);
+			}
+			return value;
+		},
+		2
+	);
+}
+/*value - объект для преобразования в JSON
 
-//Напишите функцию xmlToJson(xmlString), которая преобразует простой XML в JSON-подобную структуру.
+replacer (необязательный) - может быть:
 
-//
-// надо разобрать трай кетч
+Массивом ключей для включения в результат
+
+Функцией преобразования значений
+
+space (необязательный) - определяет отступы в итоговой строке*/
+const user = {
+	id: 123,
+	name: 'John',
+	password: 'secret',
+	age: 30,
+};
+const json = JSON.stringify(user, (key, value) => {
+	return key === 'password' ? undefined : value;
+});
+///
+const json1 = JSON.stringify(user, ['id', 'name', 'age']);
+console.log(json);
+console.log(json1);
+//Если реплейсер возвращает undefined, свойство исключается из выходного JSON
+
+const json2 = JSON.stringify(user, (key, value) => {
+	if (['password', 'age'].includes(key)) {
+		return undefined; //Метод includes() проверяет, содержит ли строка подстроку, а не элемент массива.
+	}
+	return value; /// Остальные сохраняем
+});
+
+// Через Set для оптимизации (если много ключей)
+const Manykeys = new Set(['age', 'id']);
+const json3 = JSON.stringify(user, (key, value) => {
+	if (Manykeys.has(key)) {
+		return undefined;
+	}
+	return value;
+});
+/*Фильтрация происходит только по ключам, но удаляются пары ключ-значение
+
+Set эффективен для больших списков ключей (быстрее, чем includes с массивом)
+
+*/
