@@ -143,8 +143,9 @@ function Numlet(nums) {
 */
 const arr2 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 function evenLast(numbers) {
-	let str1 = numbers.filter((elem, index) => elem % 2 === 0 && index % 2 === 0);
-	return str1.reduce((acc, elem) => (acc += elem), 0);
+	let str1 = numbers.filter((elem, index) => index % 2 === 0);
+	let str2 = str1.reduce((acc, elem) => (acc += elem), 0);
+	return str2 * str1[str1.length - 1];
 }
 console.log(evenLast(arr2)); //20
 //"CodEWaRs" --> [0,3,4,6]
@@ -258,3 +259,106 @@ console.log(divide({ a: 1, b: 2, c: 3 }));
     return [Object.keys(obj), Object.values(obj)];
 }
 */
+
+{
+	let arr = [1, 2, 3, 4, 5, 6];
+	const [a1, b1] = arr; //[a, b] = arr извлекает первые два элемента массива:
+
+	console.log(a, b);
+	const { 3: f, 4: g } = arr; //Деструктуризация массива как объекта
+	//Возьми свойство 3 (это arr[3]) и присвой переменной f → 4
+
+	console.log(f, g);
+	/*В JavaScript массивы — это специальный вид объектов, где ключами являются числовые индексы.
+
+Поэтому можно обращаться к элементам массива через деструктуризацию объекта, указывая индексы как ключи.
+
+*/
+
+	const obj = {
+		a: 1,
+		b: function () {
+			return 2;
+		},
+		c: {
+			d: 3,
+			e: 4,
+		},
+	};
+
+	const {
+		a,
+		b,
+		c: { d, e },
+	} = obj;
+}
+/////////////////////////////////////////
+{
+	/*Напишите функцию printUser, которая принимает объект вида:
+	const user = {
+		name: 'Bob',
+		age: 25,
+		city: 'Paris',
+	};
+	 и выводит "Bob is 25 years old and lives in Paris, France"
+
+	 */
+	const user = {
+		name: 'Bob',
+		age: 25,
+		city: 'Paris',
+	};
+	function printUser({ name, age, city, country = 'France' }) {
+		console.log(`${name} is ${age}years old and lives in ${city}, ${country}`);
+	}
+	printUser(user);
+}
+//вложенные массивы нельзя деструктуризировать как объекты, потому что у массивов нет именованных свойств (как у объектов), только индексы.
+
+//
+/*Ваша задача — написать функцию, которая принимает строку и возвращает массив/список, в котором длина каждого слова добавлена ​​к каждому элементу.
+
+Примечание: строка будет содержать как минимум один элемент; слова всегда будут разделены пробелом.*/
+/*Пример (Вход -> Выход)
+
+"apple ban" --> ["apple 5", "ban 3"]
+"you will win" -->["you 3", "will 4", "win 3"]
+*/
+function countLet(str) {
+	let str2 = str.split(' ').map(elem => `${elem}, ${elem.length}`);
+	return str2;
+}
+console.log(countLet('you will win')); //['you, 3', 'will, 4', 'win, 3']
+
+////2
+//Напишите функцию, которая роверяет уникальны ли все символы в строке
+function isUnique(str) {
+	const uniqueMassiv = [];
+	let str2 = str.split('');
+	for (let i of str2) {
+		if (!uniqueMassiv.includes(i)) {
+			uniqueMassiv.push(i);
+		}
+	}
+	if (str2.length !== uniqueMassiv.length) {
+		return false;
+	}
+	return true;
+}
+
+console.log(isUnique('aannGfgYYu'));
+{
+	function isUnique(str) {
+		const un = new Set(str);
+		if (un.size !== str.length) {
+			return false;
+		}
+		return true;
+	}
+	console.log(isUnique('aannGfgYYu'));
+}
+
+{
+	function changeAraay(arr) {}
+	console.log(changeAraay(arr));
+}
