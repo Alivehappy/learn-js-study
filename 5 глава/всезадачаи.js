@@ -362,3 +362,147 @@ console.log(isUnique('aannGfgYYu'));
 	function changeAraay(arr) {}
 	console.log(changeAraay(arr));
 }
+
+// Напишите функцию chunkArray, которая разбивает массив на подмассивы заданного размера.
+function chunkArray(arr, size) {
+	let changedArray = [];
+	for (let i = 0; i < arr.length; i += size) {
+		changedArray.push(arr.slice(i, i + size));
+	}
+	return changedArray;
+}
+console.log(chunkArray([1, 2, 3, 5, 5, 8, 9, 7], 2));
+//arr.slice(0, 2) → [1, 2]
+
+//4. Найти наиболее часто встречающийся символ в строке
+
+function mostFrequent(str) {
+	let arr2 = str.split('');
+	let obj = {};
+	for (let i of arr2) {
+		if (obj[i]) {
+			obj[i]++;
+		} else {
+			obj[i] = 1;
+		}
+	}
+	const maxValue = Math.max(...Object.values(obj));
+	const maxKey = Object.keys(obj).filter(elem => obj[elem] === maxValue);
+	return maxKey; //maxKey[0]'a'
+}
+console.log(mostFrequent('abracadabra'));
+['a'];
+
+{
+	function mostFrequent(str) {
+		const arr2 = str.split('').reduce((acc, elem) => {
+			acc[elem] = (acc[elem] || 0) + 1;
+			return acc;
+		}, {});
+
+		const maxValue = Math.max(...Object.values(arr2));
+		const maxKey = Object.keys(arr2).filter(elem => arr2[elem] === maxValue);
+		return maxKey;
+	}
+	console.log(mostFrequent('abracadabra'));
+}
+
+//Проверить, является ли строка палиндромом (игнорируя регистр и пробелы)
+
+function isPalindrome(str) {
+	const str2 = str.toLowerCase().replace(/\s/g, '');
+	return str2 === str2.split('').reverse().join('');
+}
+console.log(isPalindrome('A man a plan a canal Panama')); // true
+
+{
+	function isPalindrome(str) {
+		const cleaned = str
+			.toLowerCase()
+			.split('')
+			.filter(elem => elem !== ' ')
+			.join('');
+		return cleaned === cleaned.split('').reverse().join('');
+	}
+	console.log(isPalindrome('A man a plan a canal Panama')); // true
+}
+/*replace() - метод строки
+Что делает: Заменяет часть строки на другую подстроку
+
+Синтаксис: строка.replace(что_заменять, на_что_заменять)
+
+2. / / - ограничители регулярного выражения
+Первый / - начало регулярного выражения
+
+Второй / - конец регулярного выражения
+
+Между ними находится само выражение для поиска
+
+3. \s - специальный символ
+Соответствует любому пробельному символу, включая:
+
+Обычный пробел ( )
+
+Табуляцию (\t)
+
+Перевод строки (\n)
+
+Возврат каретки (\r)
+
+Вертикальную табуляцию (\v)
+
+Неразрывный пробел (\u00A0)
+
+4. g - флаг (модификатор)
+Global (глобальный поиск)
+
+Без этого флага заменяется только первое совпадение
+
+С флагом заменяются все совпадения в строке
+
+5. '' - второй аргумент replace
+Пустая строка
+
+Означает, что найденные пробелы будут заменены на "ничего" (то есть удалены)
+
+*/
+//Заменить все гласные в строке на звездочки
+
+function replaceVowels(str) {
+	const arr = str.split('');
+	const arr1 = ['a', 'o', 'u', 'e', 'i'];
+
+	for (let i = 0; i < arr.length; i++) {
+		if (arr1.includes(arr[i].toLowerCase())) {
+			arr[i] = '*';
+		}
+	}
+	return arr.join('');
+}
+console.log(replaceVowels('hello world')); // 'h*ll* w*rld'
+// я не могу пройти ворофом так как получает значение а не ндекс при тиерации и ничего не менятется фороф он тольео для перебора, а обячный фор перебирвет идает доступ к индексу
+{
+	function replaceVowels(str) {
+		return str.replace(/[aeiouAEIOU]/g, '*');
+	}
+	console.log(replaceVowels('hello world'));
+}
+///
+{
+	function replaceVowels(str) {
+		const str2 = str.split('').map(elem => {
+			if (
+				elem === 'a' ||
+				elem === 'o' ||
+				elem === 'u' ||
+				elem === 'e' ||
+				elem === 'i'
+			) {
+				return '*';
+			}
+			return elem;
+		});
+		return str2.join('');
+	}
+	console.log(replaceVowels('hello world'));
+}
