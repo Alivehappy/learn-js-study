@@ -346,6 +346,18 @@ function isUnique(str) {
 	return true;
 }
 
+{
+	function isUnique(str) {
+		const str2 = str
+			.split('')
+			.filter(
+				(elem, index, array) => array.indexOf(elem) !== array.lastIndexOf(elem)
+			);
+
+		return str2.length === str.split('').length;
+	}
+	console.log(isUnique('aannGfgYYu'));
+}
 console.log(isUnique('aannGfgYYu'));
 {
 	function isUnique(str) {
