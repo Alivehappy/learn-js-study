@@ -144,3 +144,121 @@ function byField(fieldName) {
 	return a[fieldName] > b[fieldName] ? 1 : -1;
 }
 users.sort(byField('age'));
+
+function sayHi() {
+	console.log('Hi');
+	sayHi.counter++;
+}
+sayHi.counter = 0;
+console.log(sayHi.name); // sayHi
+{
+	function f(sayHi = function () {}) {
+		console.log(sayHi.name);
+	}
+}
+/*= function() {} - значение по умолчанию для этого параметра
+
+Если функция вызывается без аргумента: f()
+
+Или с явным undefined: f(undefined)
+
+То параметр sayHi получит это значение по умолчанию
+Также имена имеют и методы объекта:
+
+let user = {
+
+  sayHi() {
+    // ...
+  },
+
+  sayBye: function() {
+    // ...
+  }
+
+}
+
+alert(user.sayHi.name); // sayHi
+alert(user.sayBye.name); // sayBye
+
+*/
+
+let arr3 = [function () {}];
+console.log(arr3[0].name); // <пустая строка>
+// здесь отсутствует возможность определить имя, поэтому его нет
+//Ещё одно встроенное свойство «length» содержит количество параметров функции в её объявлении
+function f1(a) {}
+function f2(a, b) {}
+function many(a, b, ...more) {}
+alert(f1.length); // 1
+alert(f2.length); // 2
+alert(many.length); // 2
+//Как мы видим, троеточие, обозначающее «остаточные параметры», здесь как бы «не считается
+
+function ask(question, ...handlers) {
+	let isYes = confirm(question);
+	for (let handler of handlers) {
+		if (handler.length == 0) {
+			//// Если обработчик не принимает параметров
+
+			if (isYes) handler(); // Вызываем только при положительном ответе
+		} else {
+			handler(isYes); // Всегда вызываем, передавая результат
+		}
+	}
+}
+// для положительных ответов вызываются оба типа обработчиков
+// для отрицательных - только второго типа
+//...handlers - массив функций-обработчиков (rest-параметр)
+//замыкания не даетдоступ к локаьным перменным в глобал коде а свйоства функции дают
+{
+	let sayHi = function func(who) {
+		alert(`Hello, ${who}`);
+	};
+	sayHi('John'); // Hello, John
+}
+/*Есть две важные особенности имени func, ради которого оно даётся:
+
+Оно позволяет функции ссылаться на себя же.
+Оно не доступно за пределами функции.
+Необязательное имя, которое можно вставить в Function Expression, как раз и призвано решать  проблемы,к огда не передали параментр, чтоб потом при ренейминге большр функци не быо ошибок, нам нужно второе имя, коорое можно вызывать пр пкстом аргументе
+Теперь всё работает, потому что имя "func" локальное и находится внутри функции. Теперь оно взято не снаружи (и недоступно оттуда). Спецификация гарантирует, что оно всегда будет ссылаться на текущую функцию.
+
+Внешний код все ещё содержит переменные sayHi и welcome, но теперь func – это «внутреннее имя функции», таким образом она может вызвать себя изнутри
+*/
+let sayHi = function func(who) {
+	if (who) {
+		alert(`hello, ${who}`);
+	} else {
+		func('Guest');
+	}
+};
+let welcome = sayHi;
+sayHi = null;
+welcome(); // Hello, Guest (вложенный вызов работает)
+/*Трюк с «внутренним» именем, описанный выше, работает только для Function Expression и не работает для Function Declaration. Для Function Declaration синтаксис не предусматривает возможность объявить дополнительное «внутреннее» имя.
+
+Зачастую, когда нам нужно надёжное «внутреннее» имя, стоит переписать Function Declaration на Named Function Expression.
+
+*/ {
+	function makeCounter(value) {
+		let count = value || 0;
+		function counter() {
+			count++;
+			return count;
+		}
+		(counter.set = function (value) {
+			count = value;
+		}),
+			(counter.decrease = function () {
+				count--;
+			});
+		return counter;
+	}
+	const counter = makeCounter(10);
+
+	console.log(counter()); // 10
+	console.log(counter()); // 11
+}
+
+{
+}

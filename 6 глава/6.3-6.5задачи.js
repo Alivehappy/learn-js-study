@@ -108,4 +108,81 @@ const double = multiplier(2);
 console.log(double(5)); // 10
 /*Возвращает новую функцию, которая "запоминает" этот factor через замыкание
 
+
+/*Напишите функцию sum, которая бы работала следующим образом:
+
+sum(1)(2) == 3; // 1 + 2
+sum(1)(2)(3) == 6; // 1 + 2 + 3
+sum(5)(-1)(2) == 6
+sum(6)(-1)(-2)(-3) == 0
+sum(0)(1)(2)(3)(4)(5) == 15
+без возврата функции маленькой более 2 вызовов сдлеат не можем значи тнадо возвоащать функцию всегда
+Каждый вызов f(b) возвращает новую функцию f
+
+Это позволяет делать бесконечную цепочку вызовов: f(1)(2)(3)...
+
+
 */
+function sum(a) {
+	let sumValue = a;
+	function f(b) {
+		sumValue += b;
+		return f;
+	}
+	f.toString = function () {
+		return sumValue;
+	};
+	return f;
+}
+sum(1)(2); // 1 + 2
+sum(1)(2)(3); // 1 + 2 + 3
+sum(5)(-1)(2);
+sum(6)(-1)(-2)(-3);
+sum(0)(1)(2)(3)(4)(5);
+
+//Напишите функцию createCipher(key), которая возвращает объект с encode(str) и decode(str) для шифрования ст0оки сдвигом букв на key.
+
+const arr1 = [1, 2];
+const arr2 = [3, 4];
+const arr3 = [...arr1, ...arr2];
+console.log(arr3); //[1, 2, 3, 4];
+//Создайте копию массива arr без мутации оригинала.
+{
+	const arr = [1, 2, 3];
+	const copyArr = arr.slice();
+	const copy2 = [0, ...arr, 4];
+	console.log(copyArr); //[1, 2, 3]
+
+	console.log(copy2); //[0, 1, 2, 3, 4]
+}
+
+{
+	const arr = [1, 2, 2, 3, 4, 4];
+	const unique = new Set(arr); //{1, 2, 3, 4;}
+	//надо спред для массива[... new Set(arr)]
+	console.log(unique);
+}
+
+{
+	const arr = [10, 5, 20, 15];
+	const max = Math.max(...[arr]);
+	console.log(max);
+	const obj1 = { a: 1, b: 2 };
+	const obj2 = { c: 3, b: 4 };
+	const obj3 = { ...obj1, ...obj2 };
+	console.log(obj3);
+}
+//Создайте новый массив, исключив все false значения из [0, 1, false, 2, "", 3].
+const falsy = [0, 1, false, 2, '', 3];
+const truthy = [];
+for (let elem of falsy) {
+	if (Boolean(elem) === true) {
+		truthy.push(elem);
+	}
+}
+console.log(truthy);
+//спред можнт быть нужен чтоб создаьб копию перед методом
+{
+	const falsy = [0, 1, false, 2, '', 3];
+	const truthy = falsy.filter(elem => Boolean(elem));
+}
