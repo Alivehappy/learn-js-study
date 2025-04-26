@@ -165,3 +165,33 @@ for (var i = 0; i < 3; i++) {
 		})(i);
 	}
 }
+
+//Создайте Named Function Expression factorial, которая вычисляет факториал числа n и может вызвать себя рекурсивно.
+{
+	const factorial = function calc(n) {
+		if (n <= 1) return 1;
+		return n * calc(n - 1);
+	};
+	factorial(5);
+}
+//вызывать себя по имени calc внутри своего тела
+const factorial = function calc(n) {
+	let res = 1;
+
+	for (let i = 1; i <= n; i++) {
+		res *= i;
+	}
+	return res;
+};
+factorial(5); // 120
+
+{
+	function calc(n) {
+		if (n === 1) {
+			return 1;
+		} else {
+			return n * calc(n - 1);
+		}
+	}
+	calc(5);
+}
