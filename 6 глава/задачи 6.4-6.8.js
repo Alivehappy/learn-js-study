@@ -50,7 +50,7 @@ for (var i = 0; i < 3; i++) {
 			console.log(copy);
 		};
 	})(i);
-	setTimeout(func, 100);
+	setTimeout(func, 1000);
 	//Значение i передаётся в параметр copy
 }
 /*Что попадает в setTimeout:
@@ -58,3 +58,110 @@ for (var i = 0; i < 3; i++) {
 Не сама saveValue, а результат её вызова (та функция, что с console.log)
 
 */
+//Напишите функцию delayedSequence(n, delay), которая выводит числа от 1 до n с задержкой delay между выводами, используя рекурсивный setTimeout.
+
+{
+	function delayedSequence(n, delay) {
+		let current = 1;
+		function go() {
+			console.log(current);
+			if (current < n) {
+				current++;
+				setTimeout(go, delay);
+			}
+		}
+		go();
+	}
+	delayedSequence(5, 1000);
+}
+
+function delayedSequence(n, delay) {
+	for (let i = 1; i <= n; i++) {
+		setTimeout(() => {
+			console.log(i);
+		}, delay * i);
+	}
+}
+delayedSequence(5, 1000);
+/*let → автоматически создаёт новую переменную для каждой итерации
+
+var → требует ручного создания области видимости через IIFE*/
+//Создайте функцию dynamicDelay(fn, initialDelay), которая вызывает fn() с экспоненциально растущей задержкой (начиная с initialDelay, затем delay * 2, и т.д.), но не более maxDelay = 5000 мс.
+
+{
+	function dynamicDelay(fn, initialDelay, maxDelay = 5000) {
+		let currentDelay = initialDelay;
+		function go() {
+			setTimeout(() => {
+				fn();
+				currentDelay = Max.min(currentDelay * 2, maxDelay);
+
+				go();
+			}, currentDelay);
+		}
+		go();
+	}
+}
+
+{
+	function dynamicDelay(fn, delay, maxDelay = 5000) {
+		const nextDelay = Max.min(delay * 2, maxDelay);
+		setTimeout(() => {
+			fn();
+			dynamicDelay(fn, n, maxDelay);
+		}, delay);
+	}
+}
+//Создайте функцию createCounter(step), которая возвращает функцию-счётчик. При каждом вызове счётчик увеличивает значение на step
+function createCounter(step) {
+	let num = 0;
+
+	return function count() {
+		num += step;
+		return num;
+	};
+}
+const counter = createCounter(3);
+counter(); // 3
+console.log(counter()); // 6
+const counyer1 = createCounter(5);
+console.log(counyer1());
+/*Когда замыкания действительно нужны:
+Когда нужно сохранять состояние между вызовами
+
+Когда важно защитить данные от внешнего изменения*/
+
+function generatePassword(length) {
+	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+	let password = '';
+	for (let i = 0; i <= length; i++) {
+		password += chars[Math.floor(Math.random() * chars.length)];
+	}
+	return password;
+}
+const getPassword = generatePassword(8);
+
+for (var i = 0; i < 3; i++) {
+	(function (i) {
+		let go = function (copy) {
+			console.log(copy);
+			setTimeout(() => go(i), 1000);
+		};
+		go(i);
+	})(i);
+}
+
+for (var i = 0; i < 3; i++) {
+	(function (i) {
+		setInterval(() => {
+			console.log(i);
+		}, 1000);
+	})(i);
+}
+{
+	for (var i = 0; i < 3; i++) {
+		(function (j) {
+			setTimeout(() => console.log(j), 1000);
+		})(i);
+	}
+}
