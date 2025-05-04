@@ -54,3 +54,29 @@ alert(sum(0)(1)(2)(3)(4)(5)); // 15
 	sum(1)(2)(3) + ''; // 1 + 2 + 3
 	sum(5)(-1)(2);
 }
+
+function add(sum = 0) {
+	return function count(operand) {
+		if (operand === undefined) {
+			return sum;
+		}
+		return add(sum + operand);
+	};
+}
+//каррирование
+
+function focus() {
+	const r = 1;
+	function go() {
+		console.log(r);
+		setTimeout(go, 1000);
+	}
+	go();
+}
+focus();
+
+const obj = {
+	a: 3,
+};
+const obj1 = Object.assign(obj, {}, {});
+console.log(obj1);
