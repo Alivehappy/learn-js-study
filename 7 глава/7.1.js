@@ -289,3 +289,69 @@ alert(john.age); // ...так и возраст
 	sorted(arr);
 }
 //при большом цикле у нас просто столько подходов, какая длина массива, вся работа по замене идет во внутренннем цикле, так как последний элемент опредлен, то таким же образом определяем предпоследний и те, что перед ним
+
+//Создайте объект user с  свойством _name и публичными геттером и сеттером для него. Геттер должен возвращать имя в верхнем регистре, а сеттер — проверять, что новое имя не пустое
+
+{
+	const user = {
+		_name: 'Guest',
+		get name() {
+			return this._name.toLocaleUpperCase();
+		},
+		set name(newName) {
+			if (newName && typeof newName === 'string') {
+				return (this._name = newName);
+			} else {
+				console.log('Enter normal name');
+			}
+		},
+	};
+}
+//Создайте объект rectangle с свойствами width и height. Добавьте геттер area, который возвращает площадь прямоугольника
+{
+	const rectangle = {
+		width: 5,
+		height: 5,
+		get area() {
+			return this.width * this.height;
+		},
+	};
+}
+//Создайте объект product с приватным свойством _price. Сеттер должен принимать число или строку (например, "10.99") и всегда сохранять _price как число. Если передано некорректное значение — выводить ошибку.
+
+{
+	const product = {
+		_price: 0,
+		set price(value) {
+			const onlyNum = parseFloat(value); //парсит убирая все, что не число, точку оставляет, если наичнается с букв, то нан
+			if (!isNaN(onlyNum)) {
+				//
+				this._price = onlyNum;
+			} else {
+				console.log('Error');
+				return;
+			}
+		},
+		get price() {
+			return this._price;
+		},
+	};
+	product.price = '19.99';
+	console.log(product.price); // 19.99
+}
+//Создайте объект student с полями name, grades (массив оценок). Добавьте геттер averageGrade, который будет вычислять средний балл.
+
+{
+	const school = {
+		name: 'Alice',
+		grades: [85, 90, 78, 92],
+		get averageGrade() {
+			if (this.grades.length === 0) return 0;
+			const sum = this.grades.reduce((acc, elem) => (acc += elem), 0);
+			return sum / this.grades.length;
+		},
+	};
+	console.log(school.averageGrade); // 86.25
+	school.grades.push(88);
+	console.log(school.averageGrade); // 86.6
+}
