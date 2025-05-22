@@ -297,3 +297,15 @@ Rabbit.prototype = { constructor: Rabbit };
 
 */
 //Rabbit.prototype = { constructor: Rabbit };
+{
+	let obj = {};
+	alert(obj); // "[object Object]" ?
+	console.log(obj.__proto__ === Object.prototype); // true
+	// obj.toString === obj.__proto__.toString === Object.prototype.toString
+
+	//краткая нотация obj = {} – это то же самое, что и obj = new Object(), где Object – встроенная функция-конструктор для объектов с собственным свойством prototype, которое ссылается на огромный объект с методом toString и другими.
+}
+
+//Когда вызывается new Object() (или создаётся объект с помощью литерала {...}), свойство [[Prototype]] этого объекта устанавливается на Object.prototype по правилам, которые мы обсуждали в предыдущей главе:
+//Обратите внимание, что по цепочке прототипов выше Object.prototype больше нет свойства [[Prototype]]:
+//Например, при создании массива [1, 2, 3] внутренне используется конструктор массива Array. Поэтому прототипом массива становится Array.prototype, предоставляя ему свои методы.
