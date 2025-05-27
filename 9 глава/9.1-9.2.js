@@ -128,3 +128,65 @@ User теперь ведёт себя как обычный класс
 
 */
 //Геттеры и сеттеры создаются на User.prototype
+{
+	class User {
+		constructor(name) {
+			// вызывает сеттер
+			this.name = name;
+		}
+		get name() {
+			return this._name;
+		}
+		set name(value) {
+			if (value.length < 4) {
+				console.log('Имя слишком короткое.');
+				return;
+			}
+			this.name = value;
+		}
+	}
+	let user = new User('ivan');
+	alert(user.name); // Иван
+
+	user = new User(''); // Имя слишком короткое.
+}
+//При объявлении класса геттеры/сеттеры создаются на User.prototype, вот так:
+{
+	Object.definePoroperties(User.prototype, {
+		name: {
+			get() {
+				return this._name;
+			},
+			set(name) {
+				//
+			},
+		},
+	});
+}
+//Пример с вычисляемым свойством в скобках [...]:
+{
+	class User {
+		['say ' + 'Hi']() {
+			console.log('hi');
+		}
+	}
+	new User().sayHi();
+}
+{
+	class User {
+		name = 'Аноним'; // Поле класса (добавляется в экземпляр)
+
+		sayHi() {
+			// Метод класса (добавляется в прототип)
+			alert(`Привет, ${this.name}!`);
+		}
+	}
+
+	let user = new User(1);
+	console.log(user);
+}
+//методы, геттеры и сеттеры записываются в MyClass.prototype.
+
+{
+	//Класс Clock написан в функциональном стиле. Перепишите его, используя современный синтаксис классов.
+}
