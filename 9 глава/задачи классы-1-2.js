@@ -130,14 +130,18 @@ super() запускает выполнение кода из constructor род
 
 {
 	class Timer {
-		constructor() {
+		constructor(delay) {
 			this.seconds = 0;
+			this.delay = delay;
 		}
 		start() {
+			if (this.delay === 1000) {
+				this.delay = +prompt('More then 1000 ms');
+			}
 			this.interval = setInterval(() => {
 				this.seconds++;
 				console.log(this.seconds);
-			}, 1000);
+			}, this.delay);
 		}
 		stop() {
 			clearInterval(this.interval);
@@ -147,7 +151,7 @@ super() запускает выполнение кода из constructor род
 			this.seconds = 0;
 		}
 	}
-	const timer = new Timer();
+	const timer = new Timer(1000);
 	timer.start();
 	// Через 3 секунды:
 
