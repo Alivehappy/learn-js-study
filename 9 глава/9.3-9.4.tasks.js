@@ -95,3 +95,65 @@
 	console.log(Calculator.factorial(5)); //From factorial: 120
 	console.log(Calculator.factorial(5)); //From cashe: 120
 }
+
+/*Создайте класс Animal с методом makeSound() (выводит "Some generic sound").
+От него наследуйте   Cat, переопределив makeSound() (  и мяу  ).
+Добавьте метод describe(), который выводит "I am a <тип животного>".
+*/
+{
+	class Animal {
+		constructor(sound) {
+			this.sound = sound;
+		}
+		makeSound() {
+			console.log(`Some generic sound: ${this.sound}`);
+		}
+	}
+	class Cat extends Animal {
+		constructor(sound, name) {
+			super();
+			this.sound = sound;
+			this.name = name;
+		}
+		SayMyau() {
+			super.makeSound();
+		}
+		describe() {
+			console.log(`i am ${this.name}`);
+		}
+	}
+	const blacky = new Cat('Miau', 'cat');
+	blacky.SayMyau();
+	blacky.describe();
+}
+//Реализуйте систему, где класс Robot может наследовать функциональность от нескольких миксинов:
+
+{
+	let Walker = {
+		Walk() {
+			console.log('i walk');
+		},
+	};
+	let Talker = {
+		talk() {
+			console.log('i talk');
+		},
+	};
+
+	class Robot {
+		constructor(name) {
+			this.name = name;
+		}
+		act() {
+			for (let key in this) {
+				if (typeof this[key] === 'function' && key !== 'act') {
+					this[key]();
+				}
+			}
+		}
+	}
+	Object.assign(Robot.prototype, Walker, Talker);
+	let rob = new Robot();
+	rob.act();
+}
+//Неперечислимости методов классов
