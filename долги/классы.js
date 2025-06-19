@@ -189,7 +189,14 @@ abober {
 	obj instanceof Array; //true
 }
 {
-	let obj = Object.create(Array.prototype)
+	let obj = Object.create(Array.prototype);
 	obj instanceof Array; //true
 }
+
+{
+	try {
+		var f = 1;
+	} catch (t) {
+		console.log(f);
+	}
 }

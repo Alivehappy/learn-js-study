@@ -124,6 +124,8 @@
 Для InvalidTransactionError возвращает { error: "Invalid transaction", details: error.transactionId }
 Для других ошибок возвращает { error: "Failed", reason: error.message }
 В finally отправляет аналитику: console.log("Processed at", new Date())
+///Вы явно передаёте строку "Мой текст ошибки" в super(), поэтому message заполняется.
+
 
 */
 {
@@ -196,4 +198,8 @@ catch(err)
 Когда вы ловите ошибку в catch(err), err - это уже готовый объект ошибки
 
 
+*/
+/*Родитель требует аргументы	Обязательно передавайте в super()
+Родитель не требует	Можно super() без аргументов
+Наследуетесь от Error	Всегда передавайте message (дефолтное или кастомное)
 */
