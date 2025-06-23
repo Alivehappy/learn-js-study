@@ -85,3 +85,54 @@ setTimeout "запоминает" эту функцию и вызывает её
 Возврат промиса (return delay) позволяет строить цепочки
 
 */
+//Дана функция getRandom(): Promise<number> (возвращает случайное число 0-9)
+//Используйте ее чтобы получить число, умножить его на 2 и вывести результат
+{
+	function getRandom() {
+		return new Promise((resolve, reject) => {
+			const randomNum = Math.floor(Math.random() * 10);
+			resolve(randomNum * 2);
+		});
+	}
+	getRandom().then(result => {
+		console.log(result);
+		return result;
+	});
+}
+/*1. Создайте 3 промиса, которые резолвятся через:
+   - 300мс с числом 1
+   - 200мс с числом 2
+   - 100мс с числом 3
+2. Используйте Promise.all чтобы получить массив результатов
+3. Выведите сумму элементов массива*/
+
+{
+	let promise1 = new Promise((resolve, reject) => {
+		setTimeout(() => {
+			console.log(1);
+			resolve();
+		}, 300);
+	});
+	let promise2 = new Promise((resolve, reject) => {
+		setTimeout(() => {
+			console.log(2);
+			resolve();
+		}, 200);
+	});
+	let promise3 = new Promise((resolve, reject) => {
+		setTimeout(() => {
+			console.log(3);
+			resolve();
+		}, 100);
+	});
+	Promise.all(
+		[promise1, promise2, promise3].then(results => {
+			console.log(results);
+		})
+	);
+} ///3 2 1
+/// Без then() - промис всё равно выполнится, но результат не будет обработан
+//// Один обработчик для всех результатов изза  Promise.all
+/*Все промисы выполняются параллельно
+
+Обработчик .then() срабатывает один раз, когда все промисы завершены/
