@@ -169,3 +169,60 @@ results.push(...batchRes) пытается развернуть промис к�
 		throw new Error('Все запросы провалились');
 	}
 }
+//Преобразуй асинхронное чтение файла (fs.readFile) в промис.
+
+//Дана функция loadData(callback), которая загружает данные асинхронно,и вызывает callback(error, data).
+//Напиши функцию loadDataPromise(), которая возвращает промис, разрешающийся с data или отклоняющийся с error
+{
+	function loadDataPromise() {
+		return new Promise((resolve, reject) => {
+			loadData((error, data) => {
+				if (error) {
+					reject(error);
+				} else {
+					resolve(data);
+				}
+			});
+		});
+	}
+	loadDataPromise().then(
+		res => console.log(res),
+		err => console.log(err)
+	);
+}
+/*Мы создаём новый Promise
+
+Внутри него вызываем оригинальную loadData с колбэком
+
+*/
+/*Есть воркер, который выполняет тяжелые вычисления и возвращает результат через postMessage: Напиши функцию runInWorker(task), которая:
+
+
+Принимает объект { action, data }.
+
+Возвращает промис, который разрешается с результатом от воркера или отклоняется, если воркер прислал ошибку.
+
+Автоматически терминирует jответ после 5 секунд без ответа (таймаут)
+
+*/
+{
+	const worker = new Worker('worker.js');
+	worker.onmessage = e => console.log('Результат:', e.data);
+	worker.postMessage({ action: 'calc', data: 1000 });
+
+	function runInWorker(task) {
+		return new Promise((resolve, reject) => {
+			worker.postMessage(task);
+			const onmessage = e => {
+				if (e.data.error) {
+					reject(e.data.error);
+				} else {
+					resolve(e.data.result);
+				}
+			};
+			const timeoutId = setTimeout(() => {
+				reject(new Error('Timeout'));
+			}, 5000);
+		});
+	}
+}
