@@ -1,18 +1,4 @@
-/*/*3. Наследование ошибок для API
-Условие:
-Создайте иерархию ошибок для HTTP-запросов:
-
-javascript
-class ApiError extends Error {
-  constructor(url, ...params) {
-    super(...params);
-    this.url = url;
-    this.name = "ApiError";
-  }
-}
-
-class NotFoundError extends ApiError { /* добавьте statusCode = 404  }
-class TimeoutError extends ApiError { /* добавьте timeout = 5000 *}
+/*
 Задача:
 Реализуйте функцию fetchWithRetry(url, retries = 3), которая:
 
@@ -31,25 +17,7 @@ class TimeoutError extends ApiError { /* добавьте timeout = 5000 *}
 javascript
 await fetchWithRetry("https://api.example.com/missing"); 
 // NotFoundError: Not Found (url: "...", statusCode: 404)
-4. Асинхронный парсинг JSON
-Условие:
-Создайте функцию parseJsonAsync(jsonString), которая:
 
-Возвращает Promise
-
-Через setTimeout симулирует асинхронный парсинг
-
-При успехе резолвит распарсенный объект
-
-При ошибке парсинга rejects с SyntaxError
-
-Добавьте обработку через try/catch с async/await
-
-Тесты:
-
-javascript
-await parseJsonAsync('{"valid": true}');  // { valid: true }
-await parseJsonAsync('{invalid}');       // SyntaxError
 5. Ошибки в цепочке Promise
 Условие:
 Реализуйте цепочку из 3 промисов, где:
@@ -220,15 +188,4 @@ javascript
 - constructor(parallel) - указывает сколько промисов можно выполнять параллельно
 - add(promiseCreator) - добавляет промис в очередь
 - выполнение начинается автоматически
-*/
-Задача 10. Преобразование колбэков
-
-javascript
-/*
-Напишите функцию promisify(fn), которая преобразует
-функцию с колбэком в стиле (err, data) в промис
-*/
-
-Пример использования:
-const readFilePromise = promisify(fs.readFile);
 */
