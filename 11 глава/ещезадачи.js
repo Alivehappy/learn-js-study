@@ -145,13 +145,93 @@ executeChain()
 }
 /*1. Последовательные HTTP-запросы
 Условие:
-Напишите функцию, которая последовательно выполняет 3 HTTP-запроса к разным URL и возвращает массив результатов в том же порядке, что и URL. Обрабатывайте каждый запрос через await, чтобы они выполнялись строго один за другим.
+Напишите функцию, которая последовательно выполняет 3 HTTP-запроса к разным URL и возвращает массив результатов в том же порядке, что и URL. Обрабатывайте каждый запрос через await, чтобы они выполнялись строго один за другим.*/
+{
+	async function queries(...urls) {
+		let results = [];
+		for (let i of urls) {
+			let response = await fetch(i);
+			let data = await response.json();
+			results.push(data);
+		}
+		return results;
+	}
+}
+/*for..of + await = последовательность (как очередь в магазине)
 
+map + Promise.all = параллельность (как одновременная готовка на нескольких плитах)
+
+*/
+// через мап параллельные
+{
+	async function queries(...urls) {
+		const promises = urls.map(async elem => {
+			const response = await fetch(elem);
+			return response.json();
+		});
+		return await Promise.all(promises);
+	}
+}
+/*map мгновенно создаёт массив из async функций
+
+Каждая async функция возвращает промис сразу (до выполнения await)
+
+Без Promise.all вы получаете непереданные промисы, а не их результаты Без await/.then() вы получите Promise<pending> без данных.
+*/
+/*
 2. Таймер с прогрессом
 Условие:
-Создайте функцию countdown(seconds), которая каждую секунду выводит в консоль оставшееся время (начиная с seconds до 0). В конце выведите "Время вышло!". Используйте await для пауз между обновлениями.
-
-3. Параллельные запросы с обработкой ошибок
+Создайте функцию countdown(seconds), которая каждую секунду выводит в консоль оставшееся время (начиная с seconds до 0). В конце выведите "Время вышло!". Используйте await для пауз между обновлениями.*/
+{
+	async function countdown(seconds) {
+		for (let i = seconds; i >= 0; i--) {
+			if (i > 0) {
+				await new Promise(resolve =>
+					setTimeout(() => {
+						console.log(i);
+						resolve();
+					}, 1000)
+				);
+			} else {
+				console.log('Время вышло');
+			}
+		}
+	}
+	countdown(3);
+}
+{
+	function countdown(seconds) {
+		let time = seconds;
+		for (let i = 0; i <= seconds; i++) {
+			setTimeout(() => {
+				console.log(time);
+				time--;
+				if (time === 0) {
+					console.log('Время вышло!');
+				}
+			}, i * 1000);
+		}
+	}
+	countdown(5);
+}
+{
+	function countdown(seconds) {
+		return new Promise(resolve => {
+			let time = seconds;
+			function tick() {
+				if (time > 0) {
+					--time;
+					console.log(time);
+					setTimeout(tick, 1000);
+				} else if (time === 0) {
+					resolve(console.log('Время вышло!'));
+				}
+			}
+			tick();
+		});
+	}
+}
+/*3. Параллельные запросы с обработкой ошибок
 Условие:
 Реализуйте функцию, которая:
 
@@ -159,30 +239,35 @@ executeChain()
 
 Если какой-то запрос завершается ошибкой — возвращает для него объект с ошибкой (вместо прерывания всей операции)
 
-Возвращает массив результатов в исходном порядке URL
+Возвращает массив результатов в исходном порядке <URL></URL>*/
+{
+	async function querris(...urls) {
+		let response = urls.map(elem =>
+			fetch(elem)
+				.then(res => {
+					if (!res.ok) {
+						throw new Error(`error ${res.status}`);
+					} else {
+						return res.json();
+					}
+				})
+				.catch(e => {
+					return { e: e.message, url };
+				})
+		);
+		return await Promise.all(response);
+	}
+}
 
-4. Ограничение времени выполнения
-Условие:
-Напишите функцию fetchWithTimeout(url, timeout), которая:
-
-Делает HTTP-запрос к url
-
-Отменяет запрос и выбрасывает ошибку, если ответ не получен за timeout мс
-
-Использует AbortController для отмены
-
-5. Цепочка зависимых операций
-Условие:
-Создайте функцию, которая:
-
-Получает данные пользователя по ID
-
-Для этого пользователя получает список его постов
-
-Для первого поста получает комментарии
-
-Возвращает объект { user, posts, comments }
-
-Все запросы должны выполняться последовательно через await.
-
-/
+{
+	async function fetchWithTimeout(url, timeout) {
+		return new Promise.race([
+			fetch(url),
+			new Promise(reject => {
+				setTimeout(() => {
+					reject(new Error('timeout'));
+				}, timeout);
+			}),
+		]).catch(e => console.log(e));
+	}
+}
